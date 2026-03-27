@@ -1,31 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-05_build_summary_table.py
-
-Step 5 of the variant-set comparison workflow.
-
-Purpose:
-    Combine the SNV and InDel comparison summaries into a final summary table
-    suitable for manuscript reporting.
-
-Inputs:
-    1) SNV summary.txt from step 3
-    2) InDel summary.txt from step 4
-    3) output directory
-
-Outputs:
-    - manuscript_table.tsv
-    - manuscript_table.csv
-    - combined_summary.txt
-
-Usage:
-    python3 src/05_build_summary_table.py \
-        results/03_snv_comparison/summary.txt \
-        results/04_indel_comparison/summary.txt \
-        results/05_final_summary
-"""
-
 import csv
 import os
 import sys
@@ -189,7 +163,7 @@ def print_combined_summary(combined: Dict[str, float]) -> None:
 def main() -> None:
     if len(sys.argv) != 4:
         print(
-            "Usage: python3 src/05_build_summary_table.py "
+            "Usage: python3 src/06_build_summary_table.py "
             "<snv_summary.txt> <indel_summary.txt> <output_dir>"
         )
         sys.exit(1)
