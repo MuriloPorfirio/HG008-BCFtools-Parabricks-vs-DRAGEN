@@ -4,7 +4,7 @@ import csv
 import os
 import sys
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Set
+from typing import Dict, Iterable, Set
 
 
 @dataclass(frozen=True, order=True)
@@ -112,7 +112,7 @@ def print_summary(summary: Dict[str, float]) -> None:
 def main() -> None:
     if len(sys.argv) != 4:
         print(
-            "Usage: python3 src/03_compare_snvs.py "
+            "Usage: python3 04_compare_snvs.py "
             "<clara/snvs.tsv> <dragen/snvs.tsv> <output_dir>"
         )
         sys.exit(1)
@@ -154,7 +154,7 @@ def main() -> None:
     print_summary(summary)
 
     print(f"[INFO] Results written to: {outdir}")
-    print("[INFO] Step 3 completed successfully.")
+    print("[INFO] Step 4 completed successfully.")
 
 
 if __name__ == "__main__":
