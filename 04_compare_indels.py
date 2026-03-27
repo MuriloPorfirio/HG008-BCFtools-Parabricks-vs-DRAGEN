@@ -1,37 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-04_compare_indels.py
-
-Step 4 of the variant-set comparison workflow.
-
-Purpose:
-    Compare InDels between the CLARA/Parabricks and DRAGEN variant sets
-    generated in step 2, and summarize:
-      - shared InDels
-      - CLARA-only InDels
-      - DRAGEN-only InDels
-      - shared/exclusive deletions
-      - shared/exclusive insertions
-
-Inputs:
-    1) CLARA indels.tsv
-    2) DRAGEN indels.tsv
-    3) output directory
-
-Outputs:
-    - shared_indels.tsv
-    - clara_only_indels.tsv
-    - dragen_only_indels.tsv
-    - summary.txt
-
-Usage:
-    python3 src/04_compare_indels.py \
-        results/02_variant_sets/clara/indels.tsv \
-        results/02_variant_sets/dragen/indels.tsv \
-        results/04_indel_comparison
-"""
-
 import csv
 import os
 import sys
