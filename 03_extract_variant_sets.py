@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-from __future__ import annotations
 
 import csv
 import gzip
 import os
 import sys
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Set, Tuple
+from typing import Dict, Iterable, Set, Tuple
 
 
 @dataclass(frozen=True, order=True)
@@ -16,7 +15,7 @@ class Variant:
     ref: str
     alt: str
     variant_type: str   # SNV, INDEL, OTHER
-    indel_subtype: str  # DEL, INS, COMPLEX, NA
+    indel_subtype: str  # DEL, INS, NA
 
 
 def open_textfile(path: str):
@@ -26,17 +25,6 @@ def open_textfile(path: str):
 
 
 def classify_variant(ref: str, alt: str) -> Tuple[str, str]:
-    """
-    Classify a variant using REF/ALT length.
-
-    Rules:
-      - SNV: len(REF) == 1 and len(ALT) == 1
-      - INDEL:
-          DEL -> len(REF) > len(ALT)
-          INS -> len(ALT) > len(REF)
-          COMPLEX -> len(REF) == len(ALT) and len(REF) > 1
-      - OTHER: fallback category
-    """
     ref_len = len(ref)
     alt_len = len(alt)
 
@@ -55,13 +43,6 @@ def classify_variant(ref: str, alt: str) -> Tuple[str, str]:
 
 
 def parse_vcf_to_variant_set(vcf_path: str) -> Set[Variant]:
-    """
-    Read a prepared VCF and extract one Variant per ALT allele.
-
-    Assumptions:
-      - input VCF already contains only PASS, non-symbolic records
-      - comparison is performed per real allele
-    """
     variants: Set[Variant] = set()
 
     with open_textfile(vcf_path) as handle:
@@ -78,7 +59,6 @@ def parse_vcf_to_variant_set(vcf_path: str) -> Set[Variant]:
             ref = fields[3]
             alt_field = fields[4]
 
-            # Split multi-allelic entries into one real variant per ALT
             alts = alt_field.split(",")
 
             for alt in alts:
@@ -116,7 +96,6 @@ def summarize_variants(variants: Set[Variant]) -> Dict[str, int]:
         "indels": 0,
         "indel_del": 0,
         "indel_ins": 0,
-        "indel_complex": 0,
         "others": 0,
     }
 
@@ -129,8 +108,6 @@ def summarize_variants(variants: Set[Variant]) -> Dict[str, int]:
                 summary["indel_del"] += 1
             elif v.indel_subtype == "INS":
                 summary["indel_ins"] += 1
-            elif v.indel_subtype == "COMPLEX":
-                summary["indel_complex"] += 1
         else:
             summary["others"] += 1
 
@@ -145,7 +122,6 @@ def write_summary(path: str, label: str, summary: Dict[str, int]) -> None:
         out.write(f"indels={summary['indels']}\n")
         out.write(f"indel_del={summary['indel_del']}\n")
         out.write(f"indel_ins={summary['indel_ins']}\n")
-        out.write(f"indel_complex={summary['indel_complex']}\n")
         out.write(f"others={summary['others']}\n")
 
 
@@ -178,7 +154,7 @@ def export_sample_outputs(sample_name: str, variants: Set[Variant], outdir: str)
 def main() -> None:
     if len(sys.argv) != 4:
         print(
-            "Usage: python3 src/02_extract_variant_sets.py "
+            "Usage: python3 03_extract_variant_sets.py "
             "<clara.pass.nonsymbolic.vcf.gz> "
             "<dragen.pass.nonsymbolic.vcf.gz> "
             "<output_dir>"
@@ -205,7 +181,7 @@ def main() -> None:
     export_sample_outputs("clara", clara_variants, outdir)
     export_sample_outputs("dragen", dragen_variants, outdir)
 
-    print("[INFO] Step 2 completed successfully.")
+    print("[INFO] Step 3 completed successfully.")
     print(f"[INFO] Variant-set tables written to: {outdir}")
 
 
