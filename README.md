@@ -65,7 +65,7 @@ Used to:
 - generate pairwise comparative statistics.
 
 Recommended image:
-- `staphb/bcftools`
+- `staphb/bcftools.1.21`
 
 #### 2. NVIDIA Parabricks
 This repository does **not** run the full upstream Parabricks variant-calling workflow itself, but the repository assumes that the Parabricks-derived somatic VCF has already been generated upstream.
