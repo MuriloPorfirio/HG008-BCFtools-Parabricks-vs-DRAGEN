@@ -1,6 +1,6 @@
 # HG008-BCFtools-Parabricks-vs-DRAGEN
 
-This repository contains the scripts used to reproduce the **variant-set comparison** between the **Parabricks tumor–normal call set** and the **GIAB-provided DRAGEN hard-filtered baseline** for the HG008 matched tumor–normal dataset.
+This repository contains the scripts used to reproduce the **variant-set comparison** between the **Parabricks tumor–normal call set** and the **Cancer Genome in a Bottle (GIAB)-provided DRAGEN hard-filtered baseline** for the HG008 matched tumor–normal dataset.
 
 The workflow implemented here supports the analyses reported in the manuscript section on **variant-set comparison between pipelines**. In brief, the repository:
 
